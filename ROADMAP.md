@@ -24,7 +24,7 @@
 | Shareable bet slips (Web Share + clipboard) | `src/components/ShareBetButton.tsx`, `src/lib/share-bet.ts` |
 | PWA manifest + app icon + theme | `public/manifest.json`, `src/app/icon.tsx`, `layout.tsx` |
 | CI + E2E + 39 unit tests | `.github/workflows/ci.yml`, `e2e/`, `src/**/*.test.ts` |
-| Production deploy config | `vercel.json` |
+| Production deploy to Vercel | ✅ | https://pitchprops.vercel.app |
 
 ## v0.2 — Shipped (quality)
 
@@ -41,9 +41,7 @@ Matches board, bet slip, play-money store, auto-settlement, custom props, scores
 
 ## P1 — Next up
 
-| Feature | Status | Effort | Notes |
-|---------|--------|--------|-------|
-| Production deploy to Vercel | ⬜ | S | Run `npx vercel --prod` or connect GitHub |
+_All P1 items shipped in v0.3.0._
 
 ## P2 — Later
 
