@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+html,
+body {
+  background-color: #0a0e14;
+  color: #e8edf6;
+}
+
+body {
+  background-image: radial-gradient(
+      1200px 600px at 80% -10%,
+      rgba(61, 220, 132, 0.08),
+      transparent 60%
+    ),
+    radial-gradient(900px 500px at -10% 10%, rgba(34, 153, 95, 0.07), transparent 55%);
+  min-height: 100vh;
+}
+
+/* thin custom scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #283145 transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #283145;
+  border-radius: 9999px;
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-ink-700 bg-ink-800/80 backdrop-blur;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-ink-600 bg-ink-750 px-2.5 py-1 text-xs font-medium text-ink-200;
+  }
+  .btn {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply btn bg-pitch-500 text-white hover:bg-pitch-400 shadow-glow;
+  }
+  .btn-ghost {
+    @apply btn border border-ink-600 bg-ink-750 text-ink-200 hover:border-ink-500 hover:text-white;
+  }
+  .odds-btn {
+    @apply flex min-h-11 flex-col items-start justify-center gap-0.5 rounded-xl border border-ink-700 bg-ink-750 px-3 py-2 text-left transition-all hover:border-pitch-500/60 hover:bg-ink-700 focus:outline-none focus:ring-2 focus:ring-pitch-500/40;
+  }
+  .odds-btn[data-active="true"] {
+    @apply border-pitch-400 bg-pitch-500/15 ring-1 ring-pitch-400/50;
+  }
+}
