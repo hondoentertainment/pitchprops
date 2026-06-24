@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useStore } from "@/lib/store";
 import { formatMoney } from "@/lib/format";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const LINKS = [
   { href: "/", label: "Matches" },
@@ -57,6 +58,7 @@ export function NavBar() {
         </nav>
 
         <div className="ml-auto flex shrink-0 items-center gap-2">
+          <ThemeToggle />
           <div className="rounded-xl border border-ink-700 bg-ink-800 px-3 py-1.5 text-right">
             <div className="text-[10px] uppercase tracking-wide text-ink-400">Balance</div>
             <div className="text-sm font-bold tabular-nums text-pitch-300">

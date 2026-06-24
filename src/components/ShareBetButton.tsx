@@ -7,7 +7,7 @@ import { useStore } from "@/lib/store";
 export function ShareBetButton({ bet }: { bet: PlacedBet }) {
   const pushNotice = useStore((s) => s.pushNotice);
 
-  const share = async () => {
+  const shareText = async () => {
     const text = formatBetShare(bet);
     try {
       if (typeof navigator !== "undefined" && navigator.share) {
@@ -21,14 +21,52 @@ export function ShareBetButton({ bet }: { bet: PlacedBet }) {
     }
   };
 
+  const shareImage = async () => {
+    try {
+      const res = await fetch("/api/share/bet", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ bet }),
+      });
+      if (!res.ok) throw new Error("image failed");
+      const blob = await res.blob();
+      const file = new File([blob], "pitchprops-bet.png", { type: "image/png" });
+
+      if (navigator.share && navigator.canShare?.({ files: [file] })) {
+        await navigator.share({ files: [file], title: "PitchProps bet" });
+        return;
+      }
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "pitchprops-bet.png";
+      a.click();
+      URL.revokeObjectURL(url);
+      pushNotice({ message: "Bet card downloaded", tone: "info" });
+    } catch {
+      pushNotice({ message: "Could not create bet card", tone: "loss" });
+    }
+  };
+
   return (
-    <button
-      type="button"
-      onClick={() => void share()}
-      aria-label="Share bet"
-      className="min-h-11 rounded-lg border border-ink-600 bg-ink-750 px-3 py-1.5 text-xs font-semibold text-ink-200 hover:border-pitch-500 hover:text-white"
-    >
-      Share
-    </button>
+    <div className="flex gap-1">
+      <button
+        type="button"
+        onClick={() => void shareText()}
+        aria-label="Share bet as text"
+        className="min-h-11 rounded-lg border border-ink-600 bg-ink-750 px-2.5 py-1.5 text-xs font-semibold text-ink-200 hover:border-pitch-500 hover:text-white"
+      >
+        Text
+      </button>
+      <button
+        type="button"
+        onClick={() => void shareImage()}
+        aria-label="Share bet as image card"
+        className="min-h-11 rounded-lg border border-ink-600 bg-ink-750 px-2.5 py-1.5 text-xs font-semibold text-ink-200 hover:border-pitch-500 hover:text-white"
+      >
+        Card
+      </button>
+    </div>
   );
 }

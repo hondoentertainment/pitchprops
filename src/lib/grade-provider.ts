@@ -127,11 +127,56 @@ export function gradeProviderLeg(
     if (sel === "cs_away_no") return score.home > 0 ? "won" : "lost";
   }
 
-  // First to score — without event data, infer from 0-0
+  // First to score
   if (marketId === "first_to_score") {
     if (sel === "fts_none") return total === 0 ? "won" : "lost";
-    // Can't know first scorer from final score alone
+    if (!score.events) return null;
+    if (sel === "fts_home") return score.events.firstTeam === "home" ? "won" : "lost";
+    if (sel === "fts_away") return score.events.firstTeam === "away" ? "won" : "lost";
     return null;
+  }
+
+  // Player & bookings markets when event stats are present
+  if (score.events) {
+    const ev = score.events;
+    const nameMatch = (n: string) =>
+      leg.selectionLabel.toLowerCase().includes(n.toLowerCase()) ||
+      n.toLowerCase().includes(leg.selectionLabel.toLowerCase().split(" ")[0]);
+
+    if (marketId === "anytime_scorer" || marketId === "to_score_2") {
+      const goals = ev.scorers.filter((s) => nameMatch(s)).length;
+      if (marketId === "anytime_scorer") return goals >= 1 ? "won" : "lost";
+      return goals >= 2 ? "won" : "lost";
+    }
+
+    if (marketId === "first_scorer") {
+      const fs = ev.firstScorer;
+      if (!fs) return total === 0 ? "lost" : null;
+      return nameMatch(fs) ? "won" : "lost";
+    }
+
+    if (marketId === "player_assists") {
+      const a = Object.entries(ev.assists).find(([n]) => nameMatch(n))?.[1] ?? 0;
+      return a >= 1 ? "won" : "lost";
+    }
+
+    if (marketId === "player_cards") {
+      return ev.booked.some((n) => nameMatch(n)) ? "won" : "lost";
+    }
+
+    if (marketId === "player_sot" || marketId === "player_shots") {
+      const sot = Object.entries(ev.shotsOnTarget).find(([n]) => nameMatch(n))?.[1] ?? 0;
+      const need = leg.selectionLabel.includes("2+") || sel.includes("sot2") || sel.includes("shots3") ? 2 : 1;
+      const val = marketId === "player_sot" ? sot : sot + (ev.scorers.filter((s) => nameMatch(s)).length > 0 ? 1 : 0);
+      return val >= need ? "won" : "lost";
+    }
+
+    if (marketId === "cards" || marketId === "corners") {
+      if (!ou) return null;
+      const value = marketId === "cards" ? ev.cards : ev.corners;
+      if (ou.dir === "over") return value > ou.line ? "won" : value < ou.line ? "lost" : "void";
+      return value < ou.line ? "won" : value > ou.line ? "lost" : "void";
+    }
   }
 
   // Fallback: try label-based match result grading for unknown market ids

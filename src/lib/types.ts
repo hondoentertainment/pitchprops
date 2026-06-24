@@ -154,12 +154,26 @@ export interface ToastNotice {
 }
 
 /** Final score for a fixture, used to grade/settle props from real game data. */
+export interface MatchEvents {
+  scorers: string[];
+  firstScorer: string | null;
+  /** Which team scored first (when derivable). */
+  firstTeam: "home" | "away" | null;
+  assists: Record<string, number>;
+  shotsOnTarget: Record<string, number>;
+  booked: string[];
+  corners: number;
+  cards: number;
+}
+
 export interface MatchScore {
   matchId: string;
   home: number;
   away: number;
   /** Whether the game has finished (only completed games can grade props). */
   completed: boolean;
+  /** Optional event-level stats for player/bookings grading. */
+  events?: MatchEvents;
 }
 
 /** Lightweight fixture info stored alongside a custom prop so it can be

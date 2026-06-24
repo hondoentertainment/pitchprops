@@ -54,7 +54,38 @@ describe("gradeProviderLeg", () => {
     expect(gradeProviderLeg(leg("correct_score", "cs_0_0"), score(2, 1), teams)).toBe("lost");
   });
 
-  it("returns null for player props", () => {
-    expect(gradeProviderLeg(leg("anytime_scorer", "scorer_0", "Haaland"), score(2, 1), teams)).toBeNull();
+  it("returns null for player props without events", () => {
+    expect(
+      gradeProviderLeg(
+        leg("anytime_scorer", "scorer_0", "Haaland"),
+        { matchId: "m1", home: 2, away: 1, completed: true },
+        teams
+      )
+    ).toBeNull();
+  });
+
+  it("grades anytime scorer when events list the player", () => {
+    expect(
+      gradeProviderLeg(
+        { ...leg("anytime_scorer", "scorer_0", "Erling Haaland"), selectionLabel: "Erling Haaland" },
+        {
+          matchId: "m1",
+          home: 2,
+          away: 1,
+          completed: true,
+          events: {
+            scorers: ["Erling Haaland"],
+            firstScorer: "Erling Haaland",
+            firstTeam: "home",
+            assists: {},
+            shotsOnTarget: { "Erling Haaland": 2 },
+            booked: [],
+            corners: 10,
+            cards: 4,
+          },
+        },
+        teams
+      )
+    ).toBe("won");
   });
 });

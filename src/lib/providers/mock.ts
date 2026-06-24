@@ -1,5 +1,6 @@
 import type { Market, MarketCategory, Match, MatchScore, Selection } from "@/lib/types";
 import { groupForCategory } from "@/lib/types";
+import { scoreWithEvents } from "@/lib/mock-events";
 
 // Deterministic-ish mock data so the app is fully functional with no API key.
 
@@ -505,13 +506,5 @@ function hashStr(s: string): number {
  * functional without an API key. Marked completed so suggestions are available.
  */
 export function getMockScores(): MatchScore[] {
-  return getMockMatches().map((m) => {
-    const h = hashStr(m.id);
-    return {
-      matchId: m.id,
-      home: h % 4,
-      away: (h >> 4) % 4,
-      completed: true,
-    };
-  });
+  return getMockMatches().map((m) => scoreWithEvents(m));
 }

@@ -1,65 +1,53 @@
 # PitchProps — Product Roadmap
 
-> Living document. Owned by the **Roadmap Agent** (`.cursor/skills/roadmap-agent`).
-
-**Last updated:** 2026-06-21
-**Current version:** v0.3.0
-
-## Status legend
-
-| Symbol | Meaning |
-|--------|---------|
-| ✅ Shipped | Implemented, verified working |
-| ⬜ Planned | Agreed, not started |
-| 💡 Idea | Candidate, not yet committed |
+**Last updated:** 2026-06-22
+**Current version:** v0.4.0 · Live at [pitchprops.vercel.app](https://pitchprops.vercel.app)
 
 ---
 
+## v0.4 — Shipped
+
+| Feature | Evidence |
+|---------|----------|
+| Service worker + offline shell | `public/sw.js`, `ServiceWorkerRegister.tsx`, `/offline` |
+| Shareable bet image cards | `src/app/api/share/bet/route.tsx`, `ShareBetButton.tsx` |
+| Player/bookings grading from event stats | `src/lib/mock-events.ts`, `grade-provider.ts`, `MatchEvents` |
+| Dark / light theme toggle | `ThemeToggle.tsx`, `globals.css` |
+| E2E score-graded settlement | `e2e/score-graded.spec.ts` |
+
 ## v0.3 — Shipped
 
-| Feature | Evidence |
-|---------|----------|
-| Provider leg grading from real scores | `src/lib/grade-provider.ts`, `src/lib/settle.ts`, `SettlementWatcher.tsx` |
-| New gradeable markets (Win To Nil, Exact Total Goals) | `src/lib/providers/mock.ts` |
-| Shareable bet slips (Web Share + clipboard) | `src/components/ShareBetButton.tsx`, `src/lib/share-bet.ts` |
-| PWA manifest + app icon + theme | `public/manifest.json`, `src/app/icon.tsx`, `layout.tsx` |
-| CI + E2E + 39 unit tests | `.github/workflows/ci.yml`, `e2e/`, `src/**/*.test.ts` |
-| Production deploy to Vercel | ✅ | https://pitchprops.vercel.app |
+Provider score grading, share text, PWA manifest, CI/E2E, production deploy.
 
-## v0.2 — Shipped (quality)
+## v0.1–v0.2 — Shipped
 
-| Feature | Evidence |
-|---------|----------|
-| Toast notifications | `Toaster.tsx`, `store.ts` |
-| Mobile touch targets + a11y | `BetSlip.tsx`, `OddsButton.tsx`, `NavBar.tsx` |
-
-## v0.1 — Shipped (core)
-
-Matches board, bet slip, play-money store, auto-settlement, custom props, scores/odds providers, dashboard, leaderboard.
+Core app, quality gate, toasts, mobile/a11y.
 
 ---
 
 ## P1 — Next up
 
-_All P1 items shipped in v0.3.0._
+| Feature | Status | Notes |
+|---------|--------|-------|
+| GitHub remote + Vercel Git auto-deploy | ⬜ | Push repo; connect in Vercel dashboard |
+| `ODDS_API_KEY` in Vercel env | ⬜ | User secret — add in dashboard |
 
 ## P2 — Later
 
-| Feature | Status | Effort | Notes |
-|---------|--------|--------|-------|
-| Accounts + cloud sync | 💡 | L | Auth + backend store |
-| Service worker / offline cache | 💡 | M | Extend PWA beyond manifest |
-| Additional player-prop grading | 💡 | M | Needs event-level data feed |
-| Shareable bet image cards | 💡 | M | OG image / canvas export |
+| Feature | Notes |
+|---------|-------|
+| Accounts + cloud sync | Auth + backend |
+| OG meta for shared bet URLs | Deep links to bet state |
+| Live player events from real API | Replace mock `MatchEvents` |
 
 ## P3 — Someday
 
-Daily challenges, dark/light theme, analytics.
+Daily challenges, analytics.
 
 ---
 
 ## Changelog
 
-- **2026-06-21** — v0.3.0: Real score grading for provider legs, Win To Nil + Exact Goals markets, share bet, PWA manifest, 39 tests.
-- **2026-06-21** — v0.2: CI/E2E, toasts, mobile/a11y polish, `vercel.json`.
+- **2026-06-22** — v0.4.0: Offline SW, share image cards, event-based player grading, theme toggle, score-graded E2E.
+- **2026-06-21** — v0.3.0: Score grading, share text, PWA, CI, production deploy.
 - **2026-06-20** — v0.1 baseline.

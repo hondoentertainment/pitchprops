@@ -12,6 +12,41 @@ body {
   color: #e8edf6;
 }
 
+html[data-theme="light"],
+html[data-theme="light"] body {
+  background-color: #f4f6fb;
+  color: #121826;
+}
+
+html[data-theme="light"] body {
+  background-image: radial-gradient(
+      1200px 600px at 80% -10%,
+      rgba(34, 153, 95, 0.12),
+      transparent 60%
+    ),
+    radial-gradient(900px 500px at -10% 10%, rgba(61, 220, 132, 0.08), transparent 55%);
+}
+
+html[data-theme="light"] .card {
+  @apply border-ink-300 bg-white/90;
+}
+
+html[data-theme="light"] .chip {
+  @apply border-ink-300 bg-ink-200 text-ink-700;
+}
+
+html[data-theme="light"] .btn-ghost {
+  @apply border-ink-300 bg-white text-ink-700 hover:text-ink-900;
+}
+
+html[data-theme="light"] .odds-btn {
+  @apply border-ink-300 bg-white hover:bg-ink-200;
+}
+
+html[data-theme="light"] header {
+  @apply border-ink-300 bg-white/90;
+}
+
 body {
   background-image: radial-gradient(
       1200px 600px at 80% -10%,

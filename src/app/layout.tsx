@@ -6,6 +6,7 @@ import { NavBar } from "@/components/NavBar";
 import { BetSlip } from "@/components/BetSlip";
 import { SettlementWatcher } from "@/components/SettlementWatcher";
 import { Toaster } from "@/components/Toaster";
+import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister";
 
 export const metadata: Metadata = {
   title: "PitchProps — Soccer Prop Bets",
@@ -27,10 +28,16 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
+const themeInit = `(function(){try{var t=localStorage.getItem('pitchprops-theme')||'dark';document.documentElement.dataset.theme=t;}catch(e){}})();`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+      </head>
       <body className="font-sans antialiased">
+        <ServiceWorkerRegister />
         <MatchesProvider>
           <ScoresProvider>
             <SettlementWatcher />
