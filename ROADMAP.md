@@ -29,8 +29,9 @@ Core app, quality gate, toasts, mobile/a11y.
 
 | Feature | Status | Notes |
 |---------|--------|-------|
-| GitHub remote + Vercel Git auto-deploy | ⬜ | Push repo; connect in Vercel dashboard |
-| `ODDS_API_KEY` in Vercel env | ⬜ | User secret — add in dashboard |
+| GitHub remote + CI on push | ✅ | https://github.com/hondoentertainment/pitchprops |
+| Vercel Git auto-deploy | ⬜ | Connect repo in Vercel → Settings → Git |
+| `ODDS_API_KEY` in Vercel env | ⬜ | User secret — add in dashboard, then redeploy |
 
 ## P2 — Later
 
